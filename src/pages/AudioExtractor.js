@@ -24,6 +24,7 @@ const AudioExtractor = () => {
       setText(response.data.text);
     } catch (err) {
       console.error(err);
+      alert('Ocorreu um erro :(');
     }
   };
 

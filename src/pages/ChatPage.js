@@ -21,6 +21,7 @@ const ChatPage = () => {
   };
 
   const handleSubmit = async (event) => {
+    if(!message || message === '') return;
     event.preventDefault();
 
     let newMessages = [
@@ -68,6 +69,7 @@ const ChatPage = () => {
       }
     } catch (error) {
       console.error(error);
+      alert('Ocorreu um erro :(');
     } finally {
       setLoading(false);
     }
@@ -100,6 +102,7 @@ const ChatPage = () => {
         setBasePrompt(response.data.choices[0].message.content.trim());
       }
     } catch (error) {
+      alert('Ocorreu um erro :(');
       console.error(error);
     } finally {
       setIsLoading(false);
