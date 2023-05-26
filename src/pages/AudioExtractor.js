@@ -14,7 +14,7 @@ const AudioExtractor = () => {
 
     const config = {
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('apiKey')}`,
+        'Authorization': `Bearer ${localStorage.getItem('apiKey') || process.env.REACT_APP_OPENAI_API_KEY}`,
         'Content-Type': 'multipart/form-data',
       },
     };
