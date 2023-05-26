@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Modal, Form } from 'react-bootstrap';
+import { Button, Modal, Form, Alert } from 'react-bootstrap';
 
 const ApiKeyModal = () => {
   const [show, setShow] = useState(false);
@@ -31,7 +31,15 @@ const ApiKeyModal = () => {
           <Form.Group controlId="formApiKey">
             <Form.Label>API Key</Form.Label>
             <Form.Control type="text" placeholder="Insira a API Key" onChange={handleApiKeyChange} />
+            <Form.Text className="text-muted">
+              Acesse <a href="https://platform.openai.com/account/api-keys" target="_blank" rel="noopener noreferrer">aqui</a> para gerar sua API Key.
+            </Form.Text>
           </Form.Group>
+          <Alert variant="info">
+            <p>
+              Este aplicativo pode ser testado sem inserir a API Key. Porém, a API Key default só permite 3 requisições por minuto para todos os usuários que estiverem acessando o aplicativo.
+            </p>
+          </Alert>
         </Form>
       </Modal.Body>
       <Modal.Footer>
