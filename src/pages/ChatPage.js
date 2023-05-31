@@ -149,11 +149,16 @@ const ChatPage = () => {
             Esta aplicação utiliza a API do OpenAI para realizar um chat
             interativo com o modelo de linguagem GPT-3.5 Turbo. Este chat
             permite criar uma variedade de conversas baseadas em um prompt
-            inicial. O prompt inicial orienta o modelo de linguagem sobre o
-            contexto da conversa. Você pode gerar um novo prompt a qualquer
-            momento clicando no botão "Gerar Prompt". Após gerar o prompt, você
-            pode interagir com o modelo de linguagem digitando suas mensagens e
-            enviando-as através do formulário abaixo.
+            inicial predefinido. O prompt inicial orienta o modelo de linguagem
+            sobre o contexto da conversa. Você pode escolher um dos prompts
+            predefinidos a qualquer momento, selecionando uma opção na lista de
+            exemplos. Cada opção representa um cenário de negócios diferente,
+            como atuar como um atendente de livraria, vendedor de uma loja de
+            roupas, atendente de uma floricultura, e muitos outros. Após
+            selecionar o prompt desejado, você pode interagir com o modelo de
+            linguagem digitando suas mensagens e enviando-as através do
+            formulário abaixo. Cada prompt predefinido fornece um cenário e um
+            objetivo, guiando a interação com o modelo de linguagem.
           </p>
         </Col>
       </Row>
@@ -161,7 +166,7 @@ const ChatPage = () => {
       <Row>
         <Col>
           <Form.Group controlId="basePrompt" className="mt-4">
-            <Form.Label>Prompt do Sistema</Form.Label>
+            <Form.Label><strong>Prompt do Sistema</strong></Form.Label>
             <Form.Control
               as="textarea"
               rows={4}
