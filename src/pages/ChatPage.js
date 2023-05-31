@@ -18,8 +18,7 @@ const ChatPage = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [basePrompt, setBasePrompt] = useState("");
-
-  const [isLoading, setIsLoading] = useState(false);
+  const [selectedBusiness, setSelectedBusiness] = useState("");
 
   const handleChange = (event) => {
     setMessage(event.target.value);
@@ -88,49 +87,58 @@ const ChatPage = () => {
     }
   };
 
-  const fetchPrompt = async () => {
-    setIsLoading(true);
-    const messages = [
-      {
-        role: "system",
-        content:
-          "Você é o ChatGPT, uma IA altamente inteligente e adaptável. Seu objetivo é ajudar a criar um prompt para orientar uma futura conversa. Você vai selecionar aleatoriamente um entre 100 possíveis modelos de negócios. Depois de selecionar, você irá gerar um prompt que descreve um cenário de atendimento ao cliente para esse negócio específico. O prompt deve incluir detalhes sobre o tipo de negócio, as informações que você teria como assistente desse negócio e o objetivo principal de sua função no atendimento ao cliente. Por favor, comece agora.",
-      },
-    ];
-
-    try {
-      const response = await axios.post(
-        "https://api.openai.com/v1/chat/completions",
-        {
-          model: "gpt-3.5-turbo",
-          messages,
-          temperature: 0.7,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${
-              localStorage.getItem("apiKey") ||
-              process.env.REACT_APP_OPENAI_API_KEY
-            }`,
-          },
-        }
-      );
-
-      if (
-        response.data &&
-        response.data.choices &&
-        response.data.choices.length > 0
-      ) {
-        setBasePrompt(response.data.choices[0].message.content.trim());
-      }
-    } catch (error) {
-      alert("Ocorreu um erro :(");
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const businessPrompts = [
+    {
+      name: "Livraria",
+      prompt:
+        "Atue como atendente da Livraria 'Literatura ao seu Alcance'. Seu objetivo é auxiliar os clientes a encontrar os livros que desejam, conforme o catálogo abaixo: \nCatálogo: 'A Última Folha': R$35,00 | 'Caminho Suave': R$45,00 | 'Cidade dos Sonhos': R$28,00 | 'O Último dos Moicanos': R$30,00",
+    },
+    {
+      name: "Loja de roupas",
+      prompt:
+        "Atue como vendedor na loja de roupas 'Moda e Estilo'. Seu objetivo é ajudar os clientes a escolherem as roupas que mais combinam com eles, conforme o catálogo abaixo: \nCatálogo: Camiseta Polo: R$75,00 | Calça Jeans: R$120,00 | Blusa de Seda: R$85,00 | Vestido Floral: R$200,00",
+    },
+    {
+      name: "Floricultura",
+      prompt:
+        "Atue como atendente na Floricultura 'Flor do Campo'. Seu objetivo é ajudar os clientes a escolherem as flores e arranjos ideais para cada ocasião, conforme o catálogo abaixo: \nCatálogo: Rosas Vermelhas (dúzia): R$30,00 | Orquídea: R$45,00 | Girassol (unidade): R$10,00 | Arranjo de Flores do Campo: R$70,00",
+    },
+    {
+      name: "Concessionária de carros",
+      prompt:
+        "Atue como vendedor na Concessionária de Carros 'Velocidade Máxima'. Seu objetivo é auxiliar os clientes na escolha do carro que melhor atende às suas necessidades, conforme o catálogo abaixo: \nCatálogo: Sedan Luxo (Modelo 2023): R$120.000,00 | SUV Família (Modelo 2023): R$90.000,00 | Esportivo Compacto (Modelo 2023): R$80.000,00 | Pick-up Robusta (Modelo 2023): R$140.000,00",
+    },
+    {
+      name: "Padaria",
+      prompt:
+        "Atue como atendente na Padaria 'Pão Quente'. Seu objetivo é atender os clientes e receber pedidos, conforme o cardápio abaixo: \nCardápio: Pão Francês (unidade): R$0,75 | Baguete: R$4,50 | Torta de Frango (fatia): R$6,00 | Café Expresso: R$4,00",
+    },
+    {
+      name: "Loja de eletrônicos",
+      prompt:
+        "Atue como vendedor na Loja de Eletrônicos 'Tecnologia Avançada'. Seu objetivo é ajudar os clientes a escolherem os produtos eletrônicos que melhor atendem às suas necessidades, conforme o catálogo abaixo: \nCatálogo: Smartphone 128GB: R$2.500,00 | Laptop 16GB RAM, 512GB SSD: R$5.500,00 | Smart TV 55': R$3.000,00 | Fone de Ouvido Bluetooth: R$250,00",
+    },
+    {
+      name: "Farmácia",
+      prompt:
+        "Atue como atendente na Farmácia 'Saúde em Dia'. Seu objetivo é atender os clientes, auxiliando-os a encontrar os produtos que procuram, conforme o catálogo abaixo: \nCatálogo: Analgésico (caixa): R$12,00 | Antigripal (caixa): R$18,00 | Protetor Solar FPS 60: R$35,00 | Vitamina C (frasco): R$25,00",
+    },
+    {
+      name: "Supermercado",
+      prompt:
+        "Atue como atendente no Supermercado 'Compras & Economia'. Seu objetivo é auxiliar os clientes a localizar produtos e atender suas solicitações, conforme o catálogo abaixo: \nCatálogo: Leite Integral (litro): R$3,50 | Arroz (pacote 1kg): R$5,00 | Frango Congelado (kg): R$8,00 | Sabão em Pó (pacote 1kg): R$10,00",
+    },
+    {
+      name: "Salão de beleza",
+      prompt:
+        "Atue como recepcionista no Salão de Beleza 'Bela & Poderosa'. Seu objetivo é receber os clientes, agendar horários e informar sobre os serviços oferecidos, conforme o catálogo abaixo: \nCatálogo: Corte de Cabelo: R$50,00 | Manicure: R$30,00 | Pedicure: R$40,00 | Hidratação Capilar: R$80,00",
+    },
+    {
+      name: "Pet Shop",
+      prompt:
+        "Atue como atendente no Pet Shop 'Amigo Animal'. Seu objetivo é auxiliar os clientes a encontrar os produtos e serviços que melhor atendem às necessidades de seus animais de estimação, conforme o catálogo abaixo: \nCatálogo: Ração para Cães (pacote 5kg): R$80,00 | Brinquedo para Gatos: R$20,00 | Banho em Cães de porte médio: R$50,00 | Vacina Anti-rábica: R$70,00",
+    },
+  ];
 
   return (
     <Container style={{ backgroundColor: "#f5f5f5", padding: "20px" }}>
@@ -159,33 +167,37 @@ const ChatPage = () => {
               rows={4}
               value={basePrompt}
               onChange={handlePromptChange}
-              placeholder="Escreva aqui como o ChatGPT deve se comportar durante o diálogo. Está sem ideias? Clique no botão abaixo que o próprio ChatGPT irá gerar um prompt simulando algum uso em um contexto de negócio aleatório."
+              placeholder="Escreva aqui como o ChatGPT deve se comportar durante o diálogo ou selecione um modelo de exemplo."
             />
-            <Button
-              className="mt-2"
-              variant="primary"
-              onClick={fetchPrompt}
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <>
-                  <Spinner
-                    as="span"
-                    animation="border"
-                    size="sm"
-                    role="status"
-                    aria-hidden="true"
-                  />
-                  <span className="sr-only">Carregando...</span>
-                </>
-              ) : (
-                <>Gerar Prompt</>
-              )}
-            </Button>
+
+            <Form.Group controlId="businessSelect">
+              <Form.Label>Selecione um exemplo</Form.Label>
+              <Form.Select
+                aria-label="Selecione um exemplo de Prompt"
+                value={selectedBusiness}
+                onChange={(event) => {
+                  const selectedPrompt = businessPrompts.find(
+                    (prompt) => prompt.name === event.target.value
+                  );
+                  setSelectedBusiness(event.target.value);
+                  if (selectedPrompt) {
+                    setBasePrompt(selectedPrompt.prompt);
+                  }
+                }}
+              >
+                <option value="">Selecione...</option>
+                {businessPrompts.map((prompt) => (
+                  <option value={prompt.name} key={prompt.name}>
+                    {prompt.name}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
           </Form.Group>
         </Col>
       </Row>
 
+      <br />
       <br />
 
       <Alert key={"primary"} variant={"primary"}>
