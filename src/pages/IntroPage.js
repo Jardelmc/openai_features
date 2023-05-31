@@ -15,7 +15,7 @@ const IntroPage = () => {
             Este aplicativo foi desenvolvido como uma demonstração de duas funcionalidades poderosas proporcionadas pela OpenAI: Extração de Áudio e Chat guiado com o modelo de linguagem GPT-3.5 Turbo.
           </p>
           <p style={{ fontSize: '1.2rem', lineHeight: '1.6' }}>
-            A motivação por trás do desenvolvimento deste aplicativo é apresentar estas funcionalidades na Semana Acadêmica 2023 na FeMASS".
+            A motivação por trás do desenvolvimento deste aplicativo é apresentar estas funcionalidades na Semana Acadêmica 2023 na FeMASS.
           </p>
           <p style={{ fontSize: '1.2rem', lineHeight: '1.6' }}>
             É esperado que este aplicativo forneça uma visão clara do potencial e das capacidades da OpenAI e inspire novas ideias para implementações inovadoras.

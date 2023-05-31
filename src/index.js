@@ -6,7 +6,8 @@ import AudioExtractor from './pages/AudioExtractor';
 import ApiKeyModal from './components/ApiKeyModal'
 import ChatPage from './pages/ChatPage';
 import IntroPage from './pages/IntroPage';
-
+import SectionDivider from './components/SectionDivider';
+import FinalPage from './pages/FinalPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -20,15 +21,30 @@ root.render(
     <ApiKeyModal />
 
     <IntroPage />
+
+    <SectionDivider title="Áudio" />
    
     <Container className="app-container">
       <div id="audioExtractor">
         <AudioExtractor />
       </div>
+    </Container>
+
+    <SectionDivider title="Chat" />
+
+    <Container className="app-container">
       <div id="chatPage">
         <ChatPage />
       </div>
     </Container>
+
+    <SectionDivider title="Recursos e Contato" />
+
+    <Container className="app-container">
+      <div id="finish">
+        <FinalPage />
+      </div>
+    </Container>    
   </React.StrictMode>,
 );
 

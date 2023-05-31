@@ -17,7 +17,7 @@ const Dropzone = ({ setFile }) => {
   return (
     <Card {...getRootProps()} className="text-center p-3">
     <input {...getInputProps()} />
-    <Button variant="outline-primary">Upload (mp3, mp4, mpeg, mpga, m4a, wav, and webm)</Button>
+    <Button variant="outline-primary">Upload (mp3, mp4, mpeg, mpga, m4a, wav, and webm) Máx 25Mb</Button>
   </Card>
   );
 };
