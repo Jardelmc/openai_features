@@ -1,9 +1,8 @@
 import React from 'react';
-import { Nav, Navbar, Container } from 'react-bootstrap';
+import { Navbar, Container } from 'react-bootstrap';
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AudioExtractor from './pages/AudioExtractor';
-import ApiKeyModal from './components/ApiKeyModal'
 import ChatPage from './pages/ChatPage';
 import IntroPage from './pages/IntroPage';
 import SectionDivider from './components/SectionDivider';
@@ -18,7 +17,6 @@ root.render(
         <p style={{fontSize: '0.7rem'}}>Jardel Casteluber</p></Navbar.Brand>        
       </Container>
     </Navbar>
-    <ApiKeyModal />
 
     <IntroPage />
 

@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form, Alert } from 'react-bootstrap';
 
-const ApiKeyModal = () => {
-  const [show, setShow] = useState(false);
+const ApiKeyModal = ({ show, onClose }) => {
   const [apiKey, setApiKey] = useState('');
 
   useEffect(() => {
     const key = localStorage.getItem('apiKey');
     if (!key) {
-      setShow(true);
+      //setShow(true);
     }
   }, []);
 
   const handleClose = () => {
     localStorage.setItem('apiKey', apiKey);
-    setShow(false);
+    onClose();
   };
 
   const handleApiKeyChange = (event) => {
